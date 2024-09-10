@@ -7,6 +7,7 @@
 
 #include "shaderClass.h"
 #include "Camera.h"
+#include "Box.h"
 
 using namespace std;
 
@@ -25,58 +26,6 @@ bool firstMouse = true;
 float deltaTime = 0.0f;	// time between current frame and last frame
 float lastFrame = 0.0f;
 
-GLfloat boxvertices[] =
-{
-	//position				//Color
-	//Bottom wall
-	-2.0f, 0.0f, 2.0f,		1.0f, 0.0f, 0.0f,
-	 2.0f, 0.0f, 2.0f,		1.0f, 0.0f, 0.0f,
-	 2.0f, 0.0f, 0.0f,		1.0f, 0.0f, 0.0f,
-	-2.0f, 0.0f, 0.0f,		1.0f, 0.0f, 0.0f,
-
-	//Back wall
-	-2.0f, 0.0f, 0.0f,		0.0f, 1.0f, 0.0f,
-	 2.0f, 0.0f, 0.0f,		0.0f, 1.0f, 0.0f,
-	 2.0f, 3.0f, 0.0f,		0.0f, 1.0f, 0.0f,
-	-2.0f, 3.0f, 0.0f,		0.0f, 1.0f, 0.0f,
-
-	//Left wall
-	-2.0f, 0.0f, 2.0f,		0.0f, 0.0f, 1.0f,
-	-2.0f, 0.0f, 0.0f,		0.0f, 0.0f, 1.0f,
-	-2.0f, 3.0f, 0.0f,		0.0f, 0.0f, 1.0f,
-	-2.0f, 3.0f, 2.0f,		0.0f, 0.0f, 1.0f,
-
-	//Right wall
-	 2.0f, 0.0f, 2.0f,		0.0f, 0.0f, 1.0f,
-	 2.0f, 0.0f, 0.0f,		0.0f, 0.0f, 1.0f,
-	 2.0f, 3.0f, 0.0f,		0.0f, 0.0f, 1.0f,
-	 2.0f, 3.0f, 2.0f,		0.0f, 0.0f, 1.0f,
-
-	 //Top wall
-	-2.0f, 3.0f, 2.0f,		1.0f, 0.0f, 1.0f,
-	 2.0f, 3.0f, 2.0f,		1.0f, 0.0f, 1.0f,
-	 2.0f, 3.0f, 0.0f,		1.0f, 0.0f, 1.0f,
-	-2.0f, 3.0f, 0.0f,		1.0f, 0.0f, 1.0f,
-
-};
-
-GLuint boxindices[] =
-{
-	0, 1, 2,
-	0, 2, 3,
-
-	4, 5, 6,
-	4, 6, 7,
-
-	8, 9, 10,
-	8, 10, 11,
-
-	12, 13, 14,
-	12, 14, 15,
-
-	16, 17, 18,
-	16, 18, 19
-};
 
 int main()
 {
@@ -109,28 +58,11 @@ int main()
 
 	Shader shaderProgram("default.vert", "default.frag");
 
-	unsigned int VBO, VAO, EBO;
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-	glGenBuffers(1, &EBO);
+	Box Box1;
 
-	glBindVertexArray(VAO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-
-	glBufferData(GL_ARRAY_BUFFER, sizeof(boxvertices), boxvertices, GL_STATIC_DRAW);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(boxindices), boxindices, GL_STATIC_DRAW);
-
-	//position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-
-	//color attribute
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-
-	glBindVertexArray(0);
 	
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
 	while (!glfwWindowShouldClose(window)) // Check if the window should close
 	{
 		float currentFrame = static_cast<float>(glfwGetTime());
@@ -155,9 +87,8 @@ int main()
 		glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
 		shaderProgram.setMat4("model", model);
 
-		glBindVertexArray(VAO);
-		glDrawElements(GL_TRIANGLES, sizeof(boxindices) / sizeof(int), GL_UNSIGNED_INT, 0);
-
+		
+		Box1.DrawBox();
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
