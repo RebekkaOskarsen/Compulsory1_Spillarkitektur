@@ -61,21 +61,22 @@ int main()
 
 	Box Box1;
 
-	Ball ball1(0.3f, 36, 18, glm::vec3(1.0f, 0.0f, 0.0f)); // Red ball
-	Ball ball2(0.3f, 36, 18, glm::vec3(0.0f, 1.0f, 0.0f)); // Green ball
-	Ball ball3(0.3f, 36, 18, glm::vec3(0.0f, 0.0f, 1.0f)); // Blue ball
+	//Balls
+	Ball ball1(0.3f, 36, 18, glm::vec3(0.8f, 0.0f, 0.0f)); // Dark Red ball
+	Ball ball2(0.3f, 36, 18, glm::vec3(0.0f, 0.7f, 0.0f)); // Dark Green ball
+	Ball ball3(0.3f, 36, 18, glm::vec3(0.0f, 0.0f, 0.7f)); // Dark Blue ball
 	Ball ball4(0.3f, 36, 18, glm::vec3(0.7f, 0.0f, 1.0f)); // Purple ball
 	Ball ball5(0.3f, 36, 18, glm::vec3(1.0f, 1.0f, 0.0f)); // Yellow ball
 	Ball ball6(0.3f, 36, 18, glm::vec3(1.0f, 0.5f, 0.0f)); // Orange ball
 	Ball ball7(0.3f, 36, 18, glm::vec3(0.0f, 0.0f, 0.0f)); // Black ball
 	Ball ball8(0.3f, 36, 18, glm::vec3(1.0f, 0.7f, 1.0f)); // Pink ball
-	Ball ball9(0.3f, 36, 18, glm::vec3(0.0f, 0.7f, 1.0f)); // Light blue ball
+	Ball ball9(0.3f, 36, 18, glm::vec3(0.0f, 0.7f, 1.0f)); // Light Blue ball
 	Ball ball10(0.3f, 36, 18, glm::vec3(1.6f, 0.4f, 0.4f)); // Peach ball
 	Ball ball11(0.3f, 36, 18, glm::vec3(0.7f, 0.7f, 0.8f)); // Grey ball
 	Ball ball12(0.3f, 36, 18, glm::vec3(0.6f, 0.3f, 0.0f)); // Brown ball
 
 
-
+	glEnable(GL_DEPTH_TEST);
 	
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
@@ -89,8 +90,8 @@ int main()
 
 
 		//Render
-		glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClearColor(0.6f, 0.0f, 0.9f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		shaderProgram.Activate();
 
@@ -104,7 +105,9 @@ int main()
 		shaderProgram.setMat4("model", model);
 
 		
+		// Draw box
 		Box1.DrawBox();
+
 
 		// Draw balls
 		model = glm::mat4(1.0f); // Reset model matrix to identity
@@ -158,7 +161,7 @@ int main()
 		ball10.DrawBall(shaderProgram);
 
 		model = glm::mat4(1.0f); // Reset model matrix to identity
-		model = glm::translate(model, glm::vec3(1.5f, 3.5f, 1.0f)); // 4 row-left
+		model = glm::translate(model, glm::vec3(1.5f, 3.5f, 1.0f)); // 4 row-right
 		shaderProgram.setMat4("model", model);
 		ball11.DrawBall(shaderProgram);
 
@@ -166,6 +169,7 @@ int main()
 		model = glm::translate(model, glm::vec3(-1.5f, 3.5f, 1.0f)); // 4 row-left
 		shaderProgram.setMat4("model", model);
 		ball12.DrawBall(shaderProgram);
+		//End ball rendering
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
