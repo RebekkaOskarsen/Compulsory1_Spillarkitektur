@@ -8,6 +8,7 @@
 #include "shaderClass.h"
 #include "Camera.h"
 #include "Box.h"
+#include "Ball.h"
 
 using namespace std;
 
@@ -18,7 +19,7 @@ void processInput(GLFWwindow* window);
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 800;
 
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+Camera camera(glm::vec3(0.0f, 2.0f, 10.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -36,7 +37,7 @@ int main()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	//glfw window creation
-	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Compulsory 3", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Oblig 1", NULL, NULL);
 	if (window == NULL)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
@@ -59,6 +60,21 @@ int main()
 	Shader shaderProgram("default.vert", "default.frag");
 
 	Box Box1;
+
+	Ball ball1(0.3f, 36, 18, glm::vec3(1.0f, 0.0f, 0.0f)); // Red ball
+	Ball ball2(0.3f, 36, 18, glm::vec3(0.0f, 1.0f, 0.0f)); // Green ball
+	Ball ball3(0.3f, 36, 18, glm::vec3(0.0f, 0.0f, 1.0f)); // Blue ball
+	Ball ball4(0.3f, 36, 18, glm::vec3(0.7f, 0.0f, 1.0f)); // Purple ball
+	Ball ball5(0.3f, 36, 18, glm::vec3(1.0f, 1.0f, 0.0f)); // Yellow ball
+	Ball ball6(0.3f, 36, 18, glm::vec3(1.0f, 0.5f, 0.0f)); // Orange ball
+	Ball ball7(0.3f, 36, 18, glm::vec3(0.0f, 0.0f, 0.0f)); // Black ball
+	Ball ball8(0.3f, 36, 18, glm::vec3(1.0f, 0.7f, 1.0f)); // Pink ball
+	Ball ball9(0.3f, 36, 18, glm::vec3(0.0f, 0.7f, 1.0f)); // Light blue ball
+	Ball ball10(0.3f, 36, 18, glm::vec3(1.6f, 0.4f, 0.4f)); // Peach ball
+	Ball ball11(0.3f, 36, 18, glm::vec3(0.7f, 0.7f, 0.8f)); // Grey ball
+	Ball ball12(0.3f, 36, 18, glm::vec3(0.6f, 0.3f, 0.0f)); // Brown ball
+
+
 
 	
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -89,6 +105,67 @@ int main()
 
 		
 		Box1.DrawBox();
+
+		// Draw balls
+		model = glm::mat4(1.0f); // Reset model matrix to identity
+		model = glm::translate(model, glm::vec3(0.0f, 0.5f, 1.0f)); // 1 row-middle
+		shaderProgram.setMat4("model", model);
+		ball1.DrawBall(shaderProgram);
+
+		model = glm::mat4(1.0f); // Reset model matrix to identity
+		model = glm::translate(model, glm::vec3(1.5f, 0.5f, 1.0f)); // 1 row-right
+		shaderProgram.setMat4("model", model);
+		ball2.DrawBall(shaderProgram);
+
+		model = glm::mat4(1.0f); // Reset model matrix to identity
+		model = glm::translate(model, glm::vec3(-1.5f, 0.5f, 1.0f)); // 1 row-left
+		shaderProgram.setMat4("model", model);
+		ball3.DrawBall(shaderProgram);
+
+		model = glm::mat4(1.0f); // Reset model matrix to identity
+		model = glm::translate(model, glm::vec3(0.0f, 1.5f, 1.0f)); // 2 row-middle
+		shaderProgram.setMat4("model", model);
+		ball4.DrawBall(shaderProgram);
+
+		model = glm::mat4(1.0f); // Reset model matrix to identity
+		model = glm::translate(model, glm::vec3(1.5f, 1.5f, 1.0f)); // 2 row-right
+		shaderProgram.setMat4("model", model);
+		ball5.DrawBall(shaderProgram);
+
+		model = glm::mat4(1.0f); // Reset model matrix to identity
+		model = glm::translate(model, glm::vec3(-1.5f, 1.5f, 1.0f)); // 2 row-left
+		shaderProgram.setMat4("model", model);
+		ball6.DrawBall(shaderProgram);
+
+		model = glm::mat4(1.0f); // Reset model matrix to identity
+		model = glm::translate(model, glm::vec3(0.0f, 2.5f, 1.0f)); // 3 row-middle
+		shaderProgram.setMat4("model", model);
+		ball7.DrawBall(shaderProgram);
+
+		model = glm::mat4(1.0f); // Reset model matrix to identity
+		model = glm::translate(model, glm::vec3(1.5f, 2.5f, 1.0f)); // 3 row-right
+		shaderProgram.setMat4("model", model);
+		ball8.DrawBall(shaderProgram);
+
+		model = glm::mat4(1.0f); // Reset model matrix to identity
+		model = glm::translate(model, glm::vec3(-1.5f, 2.5f, 1.0f)); // 3 row-left
+		shaderProgram.setMat4("model", model);
+		ball9.DrawBall(shaderProgram);
+
+		model = glm::mat4(1.0f); // Reset model matrix to identity
+		model = glm::translate(model, glm::vec3(0.0f, 3.5f, 1.0f)); // 4 row-middle
+		shaderProgram.setMat4("model", model);
+		ball10.DrawBall(shaderProgram);
+
+		model = glm::mat4(1.0f); // Reset model matrix to identity
+		model = glm::translate(model, glm::vec3(1.5f, 3.5f, 1.0f)); // 4 row-left
+		shaderProgram.setMat4("model", model);
+		ball11.DrawBall(shaderProgram);
+
+		model = glm::mat4(1.0f); // Reset model matrix to identity
+		model = glm::translate(model, glm::vec3(-1.5f, 3.5f, 1.0f)); // 4 row-left
+		shaderProgram.setMat4("model", model);
+		ball12.DrawBall(shaderProgram);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

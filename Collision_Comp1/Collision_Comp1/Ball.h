@@ -5,15 +5,27 @@
 #include <glm/glm.hpp>
 #include <glad/glad.h> 
 
+#include "shaderClass.h"
+
 class Ball
 {
 	public:
-		Ball();
+		Ball(float radius, int sectorCount, int stackCount, glm::vec3 color);
 
-		void DrawBall();
+		void DrawBall(Shader &shader);
+		~Ball();
 
 	private:
-		GLuint VAO, VBO, EBO;
+		void generateBall();
+
+		float radius;
+		int sectorCount;
+		int stackCount;
+		std::vector<float> vertices;
+		std::vector<unsigned int> indices;
+		glm::vec3 color;
+
+		unsigned int VAO, VBO, EBO;
 };
 
 
